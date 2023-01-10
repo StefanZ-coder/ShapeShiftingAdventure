@@ -6,14 +6,21 @@
     private bool _mainLoop = true;
     public void Run()
     {
+        Inventory inventory = new Inventory();
+        inventory.Gold = 20;
+        inventory.Items.Add(new Potion());
+        inventory.Items.Add(new Armor());
+        inventory.Items.Add(new Potion());
+        inventory.Print();
+
         Start();
-        Enemy firstenemy = _enemyFactory.FirstGuard();
+        Enemy firstenemy = _enemyFactory.CreateFirstGuard();
         Combat firstcombat = new Combat();
         firstcombat.Fightclub(firstenemy, _currentPlayer);
 
         while (_mainLoop)
         {
-            Enemy enemy = _enemyFactory.RandomEnemy();
+            Enemy enemy = _enemyFactory.CreateRandomEnemy();
             Combat combat = new Combat();
             combat.Fightclub(enemy, _currentPlayer);
         }

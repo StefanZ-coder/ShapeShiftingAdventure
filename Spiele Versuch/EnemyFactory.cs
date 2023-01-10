@@ -2,7 +2,7 @@
 {
     private Random _rand = new Random();
     private int _modifyer = 0;
-    private string GetName()
+    private string CreateRandomName()
     {
         switch (_rand.Next(0, 4))
         {
@@ -25,56 +25,56 @@
         return "Grab Räuber";
     }
 
-    private int GetPower()
+    private int CreateRandomAttakpower()
     {
         int upper = (2 * _modifyer + 3);
         int lower = (_modifyer + 2);
         return _rand.Next(lower, upper);
     }
-    private int GetHealth()
+    private int CreateRandomHealth()
     {
         int upper = (2 * _modifyer + 6);
         int lower = (_modifyer + 2);
         return _rand.Next(lower, upper);
     }
-    private int GetGold()
+    private int CreateRandomGold()
     {
         int upper = (2 * _modifyer + 8);
         int lower = (_modifyer + 2);
         return _rand.Next(lower, upper);
     }
-    public Enemy RandomEnemy()
+    public Enemy CreateRandomEnemy()
     {
         switch (_rand.Next(0, 2))
         {
             case 0:
-                return BasicEnemy();
+                return CreateBasicEnemy();
 
             case 1:
-                return WizzardEnemy();
+                return CreateWizzardEnemy();
                
         }
         throw new InvalidOperationException("Invalid random number");
 
     }
    
-    private Enemy WizzardEnemy()
+    private Enemy CreateWizzardEnemy()
     {
         Console.Clear();
         Console.WriteLine(" Nach einem weiterm Gang und einer weitern Tür steht in diesem Raum ein älter Mann vor dir.");
         Console.ReadKey();
 
-        Enemy enemy = new Enemy(GetPower(), GetHealth(), "Dunkler Magier", GetGold());
+        Enemy enemy = new Enemy(CreateRandomAttakpower(), CreateRandomHealth(), "Dunkler Magier", CreateRandomGold());
         return enemy;
 
     }
-    private Enemy BasicEnemy()
+    private Enemy CreateBasicEnemy()
     {
         Console.Clear();
         Console.WriteLine(" Du rennst weiter durch das verwinkelte Gemäuer, plötzlich siehst du hinter der nächsten ecke wie sich ein Feind vor dir erhebt...");
         Console.ReadKey();
 
-        Enemy enemy = new Enemy(GetPower(), GetHealth(), GetName(), GetGold());
+        Enemy enemy = new Enemy(CreateRandomAttakpower(), CreateRandomHealth(), CreateRandomName(), CreateRandomGold());
         return enemy;
     }
     //Boss oder so noch nicht im Spiel
@@ -90,12 +90,12 @@
 
     }
 
-    public Enemy FirstGuard()
+    public Enemy CreateFirstGuard()
     {
         Console.WriteLine(" Langsam dreht sich dein Wärter um, intuitiv bewegst du dich in seine richtung" + Environment.NewLine +
        " und greifst dir das rostige und schartige schwert das neben der tür lehnt....");
 
-        Enemy enemy = new Enemy(1, 6, "Wärter", GetGold());
+        Enemy enemy = new Enemy(1, 6, "Wärter", CreateRandomGold());
         return enemy;
 
     }
