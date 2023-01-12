@@ -1,19 +1,16 @@
 ﻿public class Game
 {
-    private Player _currentPlayer = new Player(10, 5, 4, 1, 0, 1);
+    private Player _currentPlayer = new Player(10, 5);
     private EnemyFactory _enemyFactory = new EnemyFactory();
+    public Inventory inventory = new Inventory();
 
     private bool _mainLoop = true;
     public void Run()
     {
-        Inventory inventory = new Inventory();
-        inventory.Gold = 20;
-        inventory.Items.Add(new Potion());
-        inventory.Items.Add(new Armor());
-        inventory.Items.Add(new Potion());
-        inventory.Print();
-
+        
         Start();
+        CreateStartInventory();
+        inventory.Print();
         Enemy firstenemy = _enemyFactory.CreateFirstGuard();
         Combat firstcombat = new Combat();
         firstcombat.Fightclub(firstenemy, _currentPlayer);
@@ -49,6 +46,18 @@
         " mit den rücken zur Tür gewand.");
         Console.ReadKey();
         Console.Clear();
+    }
+
+    public void CreateStartInventory()
+    {
+        inventory.Gold = 10;
+        inventory.Items.Add(new Armor(1));
+        inventory.Items.Add(new Weapon(2));
+
+        for (int i = 0; i < 5; i++)
+        {
+            inventory.Items.Add(new Potion(5));
+        }
     }
 
 }
