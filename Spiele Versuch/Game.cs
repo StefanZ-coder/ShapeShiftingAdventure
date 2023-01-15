@@ -2,24 +2,41 @@
 {
     private Player _currentPlayer = new Player(10, 5);
     private EnemyFactory _enemyFactory = new EnemyFactory();
-    public Inventory inventory = new Inventory();
+    public Inventory _inventory = new Inventory();
+    public Armor _armor = new Armor(1);
+    public Potion _potion = new Potion(5);
+    public Weapon _weapon = new Weapon(1);
 
     private bool _mainLoop = true;
+
+    
+    public void CreateStartInventory()
+    {
+        _inventory.Gold = 10;
+        _inventory.Items.Add(new Armor(1));
+        _inventory.Items.Add(new Weapon(2));
+
+        for (int i = 0; i < 5; i++)
+        {
+            _inventory.Items.Add(new Potion(5));
+        }
+    }
     public void Run()
     {
         
-        Start();
+
         CreateStartInventory();
-        inventory.Print();
+        Start();
+        _inventory.Print();
         Enemy firstenemy = _enemyFactory.CreateFirstGuard();
         Combat firstcombat = new Combat();
-        firstcombat.Fightclub(firstenemy, _currentPlayer);
+        firstcombat.Fightclub(firstenemy, _currentPlayer, _inventory, _armor, _weapon, _potion);
 
         while (_mainLoop)
         {
             Enemy enemy = _enemyFactory.CreateRandomEnemy();
             Combat combat = new Combat();
-            combat.Fightclub(enemy, _currentPlayer);
+            combat.Fightclub(enemy, _currentPlayer, _inventory ,_armor, _weapon, _potion);
         }
     }
  
@@ -30,7 +47,7 @@
         Console.WriteLine(" Name:");
         _currentPlayer.Name = Console.ReadLine();
         Console.Clear();
-
+       
         Console.WriteLine(" Du erwachst in einem dunkeln Zelle und kannst dich nicht dran erinnern wie du hier hingelangt bist oder wer du bist." + Environment.NewLine +
         " Dein Kopf scheint leer zu sein du siehst dich um und eine Ratte begrüßt dich!");
 
@@ -48,17 +65,7 @@
         Console.Clear();
     }
 
-    public void CreateStartInventory()
-    {
-        inventory.Gold = 10;
-        inventory.Items.Add(new Armor(1));
-        inventory.Items.Add(new Weapon(2));
 
-        for (int i = 0; i < 5; i++)
-        {
-            inventory.Items.Add(new Potion(5));
-        }
-    }
 
 }
 

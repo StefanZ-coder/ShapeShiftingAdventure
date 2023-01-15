@@ -9,22 +9,20 @@ using System.Threading.Tasks;
 public class Combat
 {
     private Random _rand = new Random();
-    public Armor _armor = new Armor(1);
-    public Weapon _weapon = new Weapon(1);
-    public Potion _potion = new Potion(5);
 
-    public void Fightclub(Enemy enemy, Player player)
+    public void Fightclub(Enemy enemy, Player player, Inventory inventory, Armor armor, Weapon weapon, Potion potion)
     {
         string name = enemy.Name;
         int attakpower = enemy.Attakpower;
         int health = enemy.Health;
         int gold = enemy.Gold;
-        int armordefense = _armor.Defense;
-        int weapondps = _weapon.Damage;
-        int healpotion = _potion.Healing;
+        int armordefense = inventory.Items.Contains(armor) ? 1 : 0;
+        int weapondps = inventory.Items.Contains(weapon) ? 1 : 0;
+        int healpotion = inventory.Items.Contains(potion) ? 1 : 0;
+        int potioncount = inventory.Items.Count.Equals(healpotion) ? 1 : 0;
         //TODO Ändern $ $
 
-        while (health > 0) 
+        while (health > 0)
         {
             Console.Clear();
             Console.WriteLine(name);
@@ -33,7 +31,7 @@ public class Combat
             Console.WriteLine("| (A)ngriff (V)erteidigung |");
             Console.WriteLine("|  (F)liehen (H)eilung     |");
             Console.WriteLine("============================");
-            Console.WriteLine(" Tränke: " + _potion + " Leben: " + player.Health);
+            Console.WriteLine(" Tränke: "+ potioncount + "       Leben: " + player.Health);
             string input = Console.ReadLine();
             if (input.ToLower() == "a" || input.ToLower() == "angriff")
             {
@@ -93,7 +91,7 @@ public class Combat
                 else
                 {
                     Console.WriteLine(" Du findest in deiner Tasche im richtigen augenblick einen Trank!");
-                    
+
                     Console.WriteLine(" Dein Leben wird aufgefrischt und du fühlst dich besser.");
                     player.Health += healpotion;
                     healpotion = -1;
@@ -117,9 +115,8 @@ public class Combat
 
         Console.WriteLine(" Du steht über deinen besiegten Feind und findest bei ihm " + gold + " Goldmünzen in seinen Taschen." + Environment.NewLine +
         " Hab Dank werter " + name + ", spricht dein pelziger Begleiter und nimmt das Gold an sich.");
-       
-        Console.ReadKey();
 
+        Console.ReadKey();
     }
 }
 

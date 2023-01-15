@@ -6,7 +6,7 @@
         Healing = healing;
     }
 
-    public int Healing { get; set; }
+    protected int Healing { get; }
     protected override string Name => "Heiltrank";
 
     public override void Use()

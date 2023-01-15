@@ -12,7 +12,8 @@ public class Inventory
     public List<Item> Items { get; } = new List<Item>();
 
 
-    public int Gold { get; set; } 
+    public int Gold { get; set; }
+    public int Count { get; }
 
     public void Print()
     {
@@ -26,5 +27,6 @@ public class Inventory
         }
 
     }
+
 }
 
