@@ -6,10 +6,7 @@
         Damage = damage;
     }
 
-    protected int Damage { get; }
+    public int Damage { get; }
     protected override string Name => "Waffe";
-    public override void Use()
-    {
-
-    }
+ 
 }

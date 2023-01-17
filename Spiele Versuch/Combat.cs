@@ -9,29 +9,39 @@ using System.Threading.Tasks;
 public class Combat
 {
     private Random _rand = new Random();
+    private Player _player;
 
-    public void Fightclub(Enemy enemy, Player player, Inventory inventory, Armor armor, Weapon weapon, Potion potion)
+    public Combat(Player player, Inventory inventory)
     {
+        _player = player;
+        _inventory = inventory;
+    }
+
+    private Inventory _inventory;
+    public void Fightclub(Enemy enemy)
+    {
+
         string name = enemy.Name;
         int attakpower = enemy.Attakpower;
         int health = enemy.Health;
         int gold = enemy.Gold;
-        int armordefense = inventory.Items.Contains(armor) ? 1 : 0;
-        int weapondps = inventory.Items.Contains(weapon) ? 1 : 0;
-        int healpotion = inventory.Items.Contains(potion) ? 1 : 0;
-        int potioncount = inventory.Items.Count.Equals(healpotion) ? 1 : 0;
+        int armordefense = _inventory.ArmorDefense;
+        int weapondps = _inventory.WeaponDamage;
+
+        
         //TODO Ändern $ $
 
         while (health > 0)
         {
             Console.Clear();
+            _inventory.Print();
             Console.WriteLine(name);
             Console.WriteLine("Angriffskraft " + attakpower + " / Leben " + health);
             Console.WriteLine("============================");
             Console.WriteLine("| (A)ngriff (V)erteidigung |");
             Console.WriteLine("|  (F)liehen (H)eilung     |");
             Console.WriteLine("============================");
-            Console.WriteLine(" Tränke: "+ potioncount + "       Leben: " + player.Health);
+            Console.WriteLine($" Tränke: {_inventory.PotionCount }      Leben: {_player.Health}");
             string input = Console.ReadLine();
             if (input.ToLower() == "a" || input.ToLower() == "angriff")
             {
@@ -42,7 +52,7 @@ public class Combat
                     damage = 0;
                 int attack = _rand.Next(0, weapondps) + _rand.Next(1, 4);
                 Console.WriteLine(" Du verlierst " + damage + " Leben und machst " + attack + " Schaden.");
-                player.Health -= damage;
+                _player.Health -= damage;
                 health -= attack;
             }
             else if (input.ToLower() == "v" || input.ToLower() == "verteidigung" || input.ToLower() == "Verteidigung" || input.ToLower() == "V")
@@ -54,7 +64,7 @@ public class Combat
                     damage = 0;
                 int attack = _rand.Next(0, weapondps) / 2;
                 Console.WriteLine(" Du verlierst " + damage + " Leben und machst " + attack + " Schaden.");
-                player.Health -= damage;
+                _player.Health -= damage;
                 health -= attack;
             }
             else if (input.ToLower() == "f" || input.ToLower() == "fliehen" || input.ToLower() == "Fliehen" || input.ToLower() == "F")
@@ -79,7 +89,7 @@ public class Combat
             else if (input.ToLower() == "h" || input.ToLower() == "heilung" || input.ToLower() == "Heilung" || input.ToLower() == "H")
             {
                 //Heilung
-                if (healpotion == 0)
+                if (_inventory.PotionCount == 0)
                 {
                     Console.WriteLine(" Als du in deine tasche nach einem Trank greifen willst, spürst du nur die endlosen weiten des nichts. ");
                     Console.WriteLine(" Du hast keine Tränke mehr! ");
@@ -93,8 +103,11 @@ public class Combat
                     Console.WriteLine(" Du findest in deiner Tasche im richtigen augenblick einen Trank!");
 
                     Console.WriteLine(" Dein Leben wird aufgefrischt und du fühlst dich besser.");
-                    player.Health += healpotion;
-                    healpotion = -1;
+                    Potion potion = _inventory.Items.OfType<Potion>().First();
+
+                    _player.Health += potion.Healing;
+                    _inventory.Items.Remove(potion);
+
                     Console.WriteLine(" Als du deinen Trank ansetzt nutzt dein gegener die Gelegenheit");
                     int damage = (attakpower / 2) - armordefense;
                     if (damage < 0)
@@ -104,7 +117,7 @@ public class Combat
                 }
                 Console.ReadKey();
             }
-            if (player.Health <= 0)
+            if (_player.Health <= 0)
             {
                 Console.WriteLine("Als " + name + " dich mit seinem letzten Schlag trifft fällst du besiegt zu Boden... ");
                 Console.ReadKey();

@@ -2,15 +2,12 @@
 {
     private Player _currentPlayer = new Player(10, 5);
     private EnemyFactory _enemyFactory = new EnemyFactory();
-    public Inventory _inventory = new Inventory();
-    public Armor _armor = new Armor(1);
-    public Potion _potion = new Potion(5);
-    public Weapon _weapon = new Weapon(1);
-
+    private Inventory _inventory = new Inventory();
+   
     private bool _mainLoop = true;
 
     
-    public void CreateStartInventory()
+    private void CreateStartInventory()
     {
         _inventory.Gold = 10;
         _inventory.Items.Add(new Armor(1));
@@ -24,24 +21,23 @@
     public void Run()
     {
         
-
         CreateStartInventory();
         Start();
-        _inventory.Print();
+        
         Enemy firstenemy = _enemyFactory.CreateFirstGuard();
-        Combat firstcombat = new Combat();
-        firstcombat.Fightclub(firstenemy, _currentPlayer, _inventory, _armor, _weapon, _potion);
+        Combat firstcombat = new Combat(_currentPlayer,_inventory);
+        firstcombat.Fightclub(firstenemy);
 
         while (_mainLoop)
         {
             Enemy enemy = _enemyFactory.CreateRandomEnemy();
-            Combat combat = new Combat();
-            combat.Fightclub(enemy, _currentPlayer, _inventory ,_armor, _weapon, _potion);
+            Combat combat = new Combat(_currentPlayer,_inventory);
+            combat.Fightclub(enemy);
         }
     }
  
 
-    public void Start()
+    private void Start()
     {
         Console.WriteLine(" Willkommen du Narr, nun da ihr hier seid nennt mir als erstes euren Namen....");
         Console.WriteLine(" Name:");

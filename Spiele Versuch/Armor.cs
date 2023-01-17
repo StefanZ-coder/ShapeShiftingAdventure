@@ -6,10 +6,7 @@
         Defense = defense;
     }
 
-    protected int Defense { get; }
-    protected override string Name => "Rüstung";
-    public override void Use()
-    {
-       
-    }
+    public int Defense { get; }
+    protected override string Name => "Leder Wams";
+   
 }
