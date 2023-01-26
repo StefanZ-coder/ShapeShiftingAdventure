@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 
 
-    public class Player
+public class Player
 
     {
         public Player(int health, int mana)
