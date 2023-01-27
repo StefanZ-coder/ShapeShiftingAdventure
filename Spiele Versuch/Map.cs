@@ -19,7 +19,7 @@ public class Map
 
 
             }
-
+        }
             int postionX = 6;
             int postionY = 6;
             int space = 0;
@@ -107,5 +107,6 @@ public class Map
 
             }
 
-        }
+        
     }
+}

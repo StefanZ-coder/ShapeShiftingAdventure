@@ -7,6 +7,6 @@
     }
 
     public int Damage { get; }
-    protected override string Name => "Waffe";
+    protected override string Name => "Rostiges Schwert";
  
 }

@@ -10,6 +10,8 @@ public class Combat
 {
     private Random _rand = new Random();
     private Player _player;
+    
+
 
     public Combat(Player player, Inventory inventory)
     {
@@ -18,6 +20,8 @@ public class Combat
     }
 
     private Inventory _inventory;
+
+ 
     public void Fightclub(Enemy enemy)
     {
 
@@ -28,65 +32,91 @@ public class Combat
         int armordefense = _inventory.ArmorDefense;
         int weapondps = _inventory.WeaponDamage;
 
-        
-        //TODO Ändern $ $
-
         while (health > 0)
         {
             Console.Clear();
             _inventory.Print();
             Console.WriteLine(name);
-            Console.WriteLine("Angriffskraft " + attakpower + " / Leben " + health);
+            Console.WriteLine($"Angriffskraft {attakpower} / Leben {health}");
             Console.WriteLine("============================");
             Console.WriteLine("| (A)ngriff (V)erteidigung |");
-            Console.WriteLine("|  (F)liehen (H)eilung     |");
+            Console.WriteLine("|  (Z)auber  (H)eiltrank   |");
+            Console.WriteLine("|  (F)liehen               |");
             Console.WriteLine("============================");
-            Console.WriteLine($" Tränke: {_inventory.PotionCount }      Leben: {_player.Health}");
+            Console.WriteLine($" Tränke: {_inventory.PotionCount}      Leben: {_player.Health}");
+
             string input = Console.ReadLine();
+
+            Attak(input);
+            Death();
+            Defense(input);
+            Escape(input);
+            DrinkingHealpotion(input);
+            Magiccast();
+            
+            Console.ReadKey();
+        }
+
+        
+
+        void Attak(string input)
+        {
             if (input.ToLower() == "a" || input.ToLower() == "angriff")
             {
                 //Angriff
-                Console.WriteLine(" Mit unerwarter gewandheit stürmst du mit dem alten Stahl auf deinen Gegner zu. Der " + name + "versucht ebenso dich zu treffen... ");
+                Console.WriteLine($" Mit unerwarter gewandheit stürmst du mit dem alten Stahl auf deinen Gegner zu. Der {name} versucht ebenso dich zu treffen... ");
                 int damage = attakpower - armordefense;
                 if (damage < 0)
                     damage = 0;
                 int attack = _rand.Next(0, weapondps) + _rand.Next(1, 4);
-                Console.WriteLine(" Du verlierst " + damage + " Leben und machst " + attack + " Schaden.");
+                Console.WriteLine($" Du verlierst {damage} Leben und machst {attack} Schaden.");
                 _player.Health -= damage;
                 health -= attack;
             }
-            else if (input.ToLower() == "v" || input.ToLower() == "verteidigung" || input.ToLower() == "Verteidigung" || input.ToLower() == "V")
+        }
+
+         void Defense(string input)
+        {
+            if (input.ToLower() == "v" || input.ToLower() == "verteidigung" || input.ToLower() == "Verteidigung" || input.ToLower() == "V")
             {
                 //Verteidigung
-                Console.WriteLine(" Dein gegner " + name + " macht sich bereit zum angriff, früh genug erkennst was dieser vorhat und gehst in die Verteidigung...");
+                Console.WriteLine($" Dein gegner {name} macht sich bereit zum angriff, früh genug erkennst was dieser vorhat und gehst in die Verteidigung...");
                 int damage = (attakpower / 4) - armordefense;
                 if (damage < 0)
                     damage = 0;
                 int attack = _rand.Next(0, weapondps) / 2;
-                Console.WriteLine(" Du verlierst " + damage + " Leben und machst " + attack + " Schaden.");
+                Console.WriteLine($" Du verlierst {damage} Leben und machst {attack} Schaden.");
                 _player.Health -= damage;
                 health -= attack;
             }
-            else if (input.ToLower() == "f" || input.ToLower() == "fliehen" || input.ToLower() == "Fliehen" || input.ToLower() == "F")
+        }
+
+         void Escape(string input)
+        {
+            if (input.ToLower() == "f" || input.ToLower() == "fliehen" || input.ToLower() == "Fliehen" || input.ToLower() == "F")
             {
                 //Fliehen
                 if (_rand.Next(0, 2) == 0)
                 {
-                    Console.WriteLine(" In dem moment als du fliehen willst trifft dich " + name + " mit einem Hieb in den rücken und du gehst zu boden.... ");
+                    Console.WriteLine($" In dem moment als du fliehen willst trifft dich {name} mit einem Hieb in den rücken und du gehst zu boden.... ");
                     int damage = attakpower - armordefense;
                     if (damage < 0)
                         damage = 0;
-                    Console.WriteLine(" Du verlierst " + damage + " Leben und jetzt kannst du nicht mehr fliehen! ");
+                    Console.WriteLine($" Du verlierst {damage} Leben und jetzt kannst du nicht mehr fliehen! ");
                     Console.ReadKey();
                 }
                 else
                 {
-                    Console.WriteLine(" Du konntest erfolgreich fliehen vor " + name + " und dein Abenteuer kann weiter gehen auch ohne Kampf!");
+                    Console.WriteLine($"Du konntest erfolgreich fliehen vor {name} und dein Abenteuer kann weiter gehen auch ohne Kampf!");
                     Console.ReadKey();
                     //später zur basis oder ähnliches
                 }
             }
-            else if (input.ToLower() == "h" || input.ToLower() == "heilung" || input.ToLower() == "Heilung" || input.ToLower() == "H")
+        }
+
+        void DrinkingHealpotion(string input)
+        {
+        if (input.ToLower() == "h" || input.ToLower() == "heilung" || input.ToLower() == "Heilung" || input.ToLower() == "H")
             {
                 //Heilung
                 if (_inventory.PotionCount == 0)
@@ -96,7 +126,7 @@ public class Combat
                     int damage = attakpower - armordefense;
                     if (damage < 0)
                         damage = 0;
-                    Console.WriteLine(" Dein Feind kennt kein erbarmen und schlägt zu und du verlierst " + damage + " leben.");
+                    Console.WriteLine($" Dein Feind kennt kein erbarmen und schlägt zu und du verlierst {damage} leben.");
                 }
                 else
                 {
@@ -112,27 +142,38 @@ public class Combat
                     int damage = (attakpower / 2) - armordefense;
                     if (damage < 0)
                         damage = 0;
-                    Console.WriteLine(" Du sollest nicht im Kampf trinken, du verlierst " + damage + " Leben...");
+                    Console.WriteLine($" Du sollest nicht im Kampf trinken, du verlierst {damage} Leben...");
 
                 }
                 Console.ReadKey();
             }
+        }
+        void Death()
+        {
+
             if (_player.Health <= 0)
             {
-                Console.WriteLine("Als " + name + " dich mit seinem letzten Schlag trifft fällst du besiegt zu Boden... ");
+                Console.WriteLine($"Als {name} dich mit seinem letzten Schlag trifft fällst du besiegt zu Boden... ");
                 Console.ReadKey();
                 System.Environment.Exit(0);
             }
-            Console.ReadKey();
         }
 
-        Console.WriteLine(" Du steht über deinen besiegten Feind und findest bei ihm " + gold + " Goldmünzen in seinen Taschen." + Environment.NewLine +
-        " Hab Dank werter " + name + ", spricht dein pelziger Begleiter und nimmt das Gold an sich.");
+        void Magiccast()
+        {
+
+        }
+
+
+        Console.WriteLine($" Du steht über deinen besiegten Feind und findest bei ihm {gold} Goldmünzen in seinen Taschen." + Environment.NewLine +
+        $" Hab Dank werter {name}, spricht dein pelziger Begleiter und nimmt das Gold an sich.");
 
         Console.ReadKey();
     }
+
+
+
+  
+
+
 }
-
-
-    
-
