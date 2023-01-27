@@ -10,27 +10,25 @@ public class Combat
 {
     private Random _rand = new Random();
     private Player _player;
-    
-
+    private Inventory _inventory;
 
     public Combat(Player player, Inventory inventory)
     {
         _player = player;
         _inventory = inventory;
     }
-
-    private Inventory _inventory;
-
- 
+    
     public void Fightclub(Enemy enemy)
     {
-
+        
         string name = enemy.Name;
         int attakpower = enemy.Attakpower;
         int health = enemy.Health;
         int gold = enemy.Gold;
         int armordefense = _inventory.ArmorDefense;
         int weapondps = _inventory.WeaponDamage;
+        string combatOptions = File.ReadAllText("D:\\Interface01.txt");
+
 
         while (health > 0)
         {
@@ -38,11 +36,8 @@ public class Combat
             _inventory.Print();
             Console.WriteLine(name);
             Console.WriteLine($"Angriffskraft {attakpower} / Leben {health}");
-            Console.WriteLine("============================");
-            Console.WriteLine("| (A)ngriff (V)erteidigung |");
-            Console.WriteLine("|  (Z)auber  (H)eiltrank   |");
-            Console.WriteLine("|  (F)liehen               |");
-            Console.WriteLine("============================");
+            Console.Write(combatOptions);
+            Console.WriteLine();
             Console.WriteLine($" Tränke: {_inventory.PotionCount}      Leben: {_player.Health}");
 
             string input = Console.ReadLine();
