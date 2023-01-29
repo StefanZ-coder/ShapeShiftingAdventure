@@ -1,7 +1,7 @@
-﻿public class Weapon : Item
+﻿public class MeeleWeapon : Item
 {
 
-    public Weapon(int damage)
+    public MeeleWeapon(int damage)
     {
         Damage = damage;
     }

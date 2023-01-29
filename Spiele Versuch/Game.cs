@@ -1,6 +1,6 @@
 ﻿public class Game
 {
-    private Player _currentPlayer = new Player(10, 5);
+    private Player _currentPlayer = new Player(10, 3);
     private EnemyFactory _enemyFactory = new EnemyFactory();
     private Inventory _inventory = new Inventory();
    
@@ -11,11 +11,17 @@
     {
         _inventory.Gold = 10;
         _inventory.Items.Add(new Armor(1));
-        _inventory.Items.Add(new Weapon(2));
+        _inventory.Items.Add(new MeeleWeapon(2));
+        _inventory.Items.Add(new MagicWeapon(3));
 
         for (int i = 0; i < 5; i++)
         {
-            _inventory.Items.Add(new Potion(5));
+            _inventory.Items.Add(new Healpotion(4));
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            _inventory.Items.Add(new Manapotion(3));
         }
     }
     public void Run()
