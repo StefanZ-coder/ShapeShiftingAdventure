@@ -1,9 +1,12 @@
-﻿public class Game
+﻿using System.Numerics;
+
+public class Game
 {
-    private Player _currentPlayer = new Player(10, 5);
+    private Player _currentPlayer = new Player(10, 3);
     private EnemyFactory _enemyFactory = new EnemyFactory();
     private Inventory _inventory = new Inventory();
    
+
     private bool _mainLoop = true;
 
     
@@ -11,11 +14,17 @@
     {
         _inventory.Gold = 10;
         _inventory.Items.Add(new Armor(1));
-        _inventory.Items.Add(new Weapon(2));
+        _inventory.Items.Add(new MeeleWeapon(2));
+        _inventory.Items.Add(new MagicWeapon(3));
 
         for (int i = 0; i < 5; i++)
         {
-            _inventory.Items.Add(new Potion(5));
+            _inventory.Items.Add(new Healpotion(4));
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            _inventory.Items.Add(new Manapotion(3));
         }
     }
     public void Run()
@@ -26,13 +35,14 @@
         
         Enemy firstenemy = _enemyFactory.CreateFirstGuard();
         Combat firstcombat = new Combat(_currentPlayer,_inventory);
-        firstcombat.Fightclub(firstenemy);
+        FightPossibilities _fightPossibilities = new FightPossibilities(_currentPlayer,_inventory);
+        firstcombat.FightRun(firstenemy,_fightPossibilities);
 
         while (_mainLoop)
         {
             Enemy enemy = _enemyFactory.CreateRandomEnemy();
             Combat combat = new Combat(_currentPlayer,_inventory);
-            combat.Fightclub(enemy);
+            combat.FightRun(enemy,_fightPossibilities);
         }
     }
  

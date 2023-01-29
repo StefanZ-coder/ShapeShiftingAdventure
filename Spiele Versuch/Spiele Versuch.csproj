@@ -8,4 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpieleVersuchCommon1\SpieleVersuchCommon1(Inventory).csproj" />
+    <ProjectReference Include="..\SpieleVersuchCommon2\SpieleVersuchCommon2(PlayerAndEnemys).csproj" />
+  </ItemGroup>
+
 </Project>

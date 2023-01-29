@@ -29,16 +29,24 @@ public class Inventory
         }
     }
 
-    public int WeaponDamage
+    public int MeeleWeaponDamage
     {
         get
         {
-            return Items.OfType<Weapon>().Select(x => x.Damage).DefaultIfEmpty(0).First();
+            return Items.OfType<MeeleWeapon>().Select(x => x.Damage).DefaultIfEmpty(0).First();
         }
     }
 
-    public int PotionCount => Items.OfType<Potion>().Count();
-    
+    public int MagicWeaponDamage
+    {
+        get
+        {
+            return Items.OfType<MagicWeapon>().Select(x => x.Damage).DefaultIfEmpty(0).First();
+        }
+    }
+
+    public int HealPotionCount => Items.OfType<Healpotion>().Count();
+    public int ManaPotionCount => Items.OfType<Manapotion>().Count();
 
     public void Print()
     {
