@@ -1,0 +1,6 @@
+====================================
+| (A)ngriff   (V)erteidigung       |
+| (Z)auber    (H)eilungszauber     |
+| (M)anatrank (Regenerationstrank  |
+| (F)lucht                         |
+====================================
