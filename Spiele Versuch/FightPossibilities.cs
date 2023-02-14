@@ -180,7 +180,12 @@ public class FightPossibilities
         {
             Console.WriteLine($"Als {enemy.Name} dich mit seinem letzten Schlag trifft fällst du besiegt zu Boden... ");
             Console.ReadKey();
-            System.Environment.Exit(0);
+            if (PlayerDied != null)
+            {
+                PlayerDied(this, EventArgs.Empty);
+            }
+            PlayerDied?.Invoke(this, EventArgs.Empty);
         }
     }
+    public event EventHandler PlayerDied;
 }

@@ -35,17 +35,22 @@ public class Game
         
         Enemy firstenemy = _enemyFactory.CreateFirstGuard();
         Combat firstcombat = new Combat(_currentPlayer,_inventory);
-        FightPossibilities _fightPossibilities = new FightPossibilities(_currentPlayer,_inventory);
-        firstcombat.FightRun(firstenemy,_fightPossibilities);
+        FightPossibilities fightPossibilities = new FightPossibilities(_currentPlayer,_inventory);
+        fightPossibilities.PlayerDied += FightPossibilities_PlayerDied;
+        firstcombat.FightRun(firstenemy,fightPossibilities);
 
         while (_mainLoop)
         {
             Enemy enemy = _enemyFactory.CreateRandomEnemy();
             Combat combat = new Combat(_currentPlayer,_inventory);
-            combat.FightRun(enemy,_fightPossibilities);
+            combat.FightRun(enemy,fightPossibilities);
         }
     }
- 
+
+    private void FightPossibilities_PlayerDied(object? sender, EventArgs e)
+    {
+        Environment.Exit(0);
+    }
 
     private void Start()
     {
