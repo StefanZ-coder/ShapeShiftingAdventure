@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpieleVersuchCommon1\SpieleVersuchCommon1(Inventory).csproj" />
-    <ProjectReference Include="..\SpieleVersuchCommon2\SpieleVersuchCommon2(PlayerAndEnemys).csproj" />
+    <ProjectReference Include="..\SpieleVersuchCommon1\SpieleVersuchInventory.csproj" />
+    <ProjectReference Include="..\SpieleVersuchCommon2\ShapeShiftingAdventureCharakteres.csproj" />
   </ItemGroup>
 
 </Project>
